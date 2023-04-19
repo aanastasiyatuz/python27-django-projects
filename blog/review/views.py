@@ -1,12 +1,13 @@
-from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from rest_framework.generics import (CreateAPIView, DestroyAPIView,
+                                     UpdateAPIView)
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from .models import Like, Comment
-from .serializers import CommentSerializer
 from post.models import Post, User
+from .models import Comment, Like
+from .serializers import CommentSerializer
 
 
 @api_view(['POST'])
@@ -25,6 +26,9 @@ def toggle_like(request, id):
 
 
 class CreateCommentAPIView(CreateAPIView):
+    """
+    Создание комментария
+    """
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]

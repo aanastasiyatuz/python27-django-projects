@@ -24,6 +24,18 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Python 27 API",
+        description="makers bootcamp",
+        default_version="v1",
+    ),
+    public=True
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -39,4 +51,5 @@ urlpatterns = [
     path('api/comment/create/', CreateCommentAPIView.as_view()),
     path('api/comment/update/<int:pk>/', UpdateCommentAPIView.as_view()),
     path('api/comment/delete/<int:pk>/', DeleteCommentAPIView.as_view()),
+    path('docs/', schema_view.with_ui('swagger')),
 ]
